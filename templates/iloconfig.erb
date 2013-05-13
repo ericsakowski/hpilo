@@ -4,8 +4,7 @@
    <% gwarray = iloip.split('.') -%>
    <% gateway = gwarray[0] + '.' + gwarray[1] + '.' + gwarray[2] + '.' + gwbit -%>
 <% else -%>
-   <% iloip = myiloip -%>
-   <% gateway = mygateway -%>
+   <% iloip = ip -%>
 <% end -%> 
 
 <RIBCL VERSION="2.0">
@@ -16,19 +15,25 @@
   </SERVER_INFO>
   <% end -%> 
   <RIB_INFO MODE="write">
-<% if dhcp == "no" -%>
+<% if dhcp == false -%>
     <MOD_NETWORK_SETTINGS>
       <SPEED_AUTOSELECT VALUE = "Y"/>
-      <IP_ADDRESS VALUE = "<%= iloip %>"/>
-      <SUBNET_MASK VALUE = "<%= netmask %>"/>
-      <GATEWAY_IP_ADDRESS VALUE = "<%= gateway %>"/>
-      <DNS_NAME VALUE = "ilo-<%= hostname %>"/>
-      <PRIM_DNS_SERVER value = "<%= dns %>"/>
+<% if !shared -%>
+      <SHARED_NETWORK_PORT VALUE="N"/>
+<% end -%>
+<% if shared -%>
+      <SHARED_NETWORK_PORT VALUE="Y"/>
+<% end -%>
+      <IP_ADDRESS VALUE = "<%= iloip -%>"/>
+      <SUBNET_MASK VALUE = "<%= netmask -%>"/>
+      <GATEWAY_IP_ADDRESS VALUE = "<%= gw -%>"/>
+      <DNS_NAME VALUE = "<%= hostname -%>-iLO"/>
+      <PRIM_DNS_SERVER value = "<%= dns -%>"/>
       <DHCP_ENABLE VALUE = "N"/>
       <DOMAIN_NAME VALUE = ""/>
     </MOD_NETWORK_SETTINGS>
 <% end -%>
-<% if dhcp == "yes" -%>
+<% if dhcp == true -%>
     <MOD_NETWORK_SETTINGS>
       <REG_DDNS_SERVER value="Yes"/>
       <DHCP_DOMAIN_NAME value="Yes"/>
@@ -38,6 +43,12 @@
       <DHCP_DNS_SERVER value="Yes"/>
       <DHCP_WINS_SERVER value="Yes"/>
       <DHCP_STATIC_ROUTE value="Yes"/>
+<% if shared == false -%>
+      <SHARED_NETWORK_PORT VALUE="N"/>
+<% end -%>
+<% if shared == true -%>
+      <SHARED_NETWORK_PORT VALUE="Y"/>
+<% end -%>
     </MOD_NETWORK_SETTINGS>
 <% end -%>
   </RIB_INFO>
