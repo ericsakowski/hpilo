@@ -4,10 +4,10 @@
 
 1. [Overview](#overview)
 2. [Module Description - What the module does and why it is useful](#module-description)
-3. [Setup - The basics of getting started with [Modulename]](#setup)
-    * [What [Modulename] affects](#what-[modulename]-affects)
+3. [Setup - The basics of getting started with hpilo](#setup)
+    * [What hpilo affects](#what-hpilo-affects)
     * [Setup requirements](#setup-requirements)
-    * [Beginning with [Modulename]](#beginning-with-[Modulename])
+    * [Beginning with hpilo](#beginning-with-[hpilo])
 4. [Usage - Configuration options and additional functionality](#usage)
 5. [Reference - An under-the-hood peek at what the module is doing and how](#reference)
 5. [Limitations - OS compatibility, etc.](#limitations)
@@ -81,20 +81,20 @@ fx if ipaddress of system is 192.168.2.10 ilo will get 192.168.3.10:
     }     
 
 To configure with yaml in hiera for Puppet 3:
-
-   hpilo::autoip: false<BR>
-   hpilo::dhcp: false<BR>
-   hpilo::dns: '192.168.1.1'<BR>
-   hpilo::gw: '192.168.1.1'<BR>
-   hpilo::gwbit: '240'<BR>
-   hpilo::ilonet: '3'<BR>
-   hpilo::ilouser: 'admin'<BR>
-   hpilo::ilouserpass: 'password'<BR>
-   hpilo::ip: '192.168.1.2'<BR>
-   hpilo::logfile: '/tmp/ilosettings.log'<BR>
-   hpilo::netmask: '255.255.255.0'<BR>
-   hpilo::settingsfile : '/etc/ilosettings.xml'<BR>
-   hpilo::shared: true<BR>
+    
+    hpilo::autoip: false
+    hpilo::dhcp: false
+    hpilo::dns: '192.168.1.1'
+    hpilo::gw: '192.168.1.1'
+    hpilo::gwbit: '240'
+    hpilo::ilonet: '3'
+    hpilo::ilouser: 'admin'
+    hpilo::ilouserpass: 'password'
+    hpilo::ip: '192.168.1.2'
+    hpilo::logfile: '/tmp/ilosettings.log'
+    hpilo::netmask: '255.255.255.0'
+    hpilo::settingsfile : '/etc/ilosettings.xml'
+    hpilo::shared: true
 
 ##Reference
  * [iLO configuration guide](http://h20000.www2.hp.com/bc/docs/support/SupportManual/c02774508/c02774508.pdf)
