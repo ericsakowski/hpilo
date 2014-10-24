@@ -107,6 +107,10 @@ but will still apply the new network settings.
 
 Only tested on Centos 6.4 with Puppet Enterprise 2.8.1.  Should probably work on RHEL and SuSE.
 
+##Similar Modules
+If you like this module, I have built a similar module that is generic and manages the IMPI device and IPMI user and doesn't depend on hp tools.
+[BMClib](https://github.com/logicminds/bmclib)
+
 ##Contributors
  * Original module by Corey Osman <corey@logicminds.biz>
  * Major refactor by Eric Sakowski <sakowski@gmail.com>
