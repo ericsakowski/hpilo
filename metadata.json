@@ -1,0 +1,66 @@
+{
+  "name": "logicminds-hpilo",
+  "author": "Corey Osman",
+  "description": "Module for configuring the hp ilo interface using hponfig and xml config file",
+  "license": "LGPL-2.1+",
+  "project_page": "http://www.github.com/logicminds/hpilo",
+  "source": "https://github.com/logicminds/hpilo.git",
+  "summary": "The hpilo is a module that automates configuration of hpilo devices",
+  "version": "0.0.2",
+  "issues_url": "https://github.com/logicminds/hpilo/issues",
+  "operatingsystem_support": [
+    {
+      "operatingsystem": "RedHat",
+      "operatingsystemrelease": [
+        "4",
+        "5",
+        "6",
+        "7"
+      ]
+    },
+    {
+      "operatingsystem": "CentOS",
+      "operatingsystemrelease": [
+        "4",
+        "5",
+        "6",
+        "7"
+      ]
+    },
+    {
+      "operatingsystem": "OracleLinux",
+      "operatingsystemrelease": [
+        "4",
+        "5",
+        "6",
+        "7"
+      ]
+    },
+    {
+      "operatingsystem": "Scientific",
+      "operatingsystemrelease": [
+        "5",
+        "6",
+        "7"
+      ]
+    },
+    {
+      "operatingsystem": "Debian",
+      "operatingsystemrelease": [
+        "6",
+        "7"
+      ]
+    },
+    {
+      "operatingsystem": "Ubuntu",
+      "operatingsystemrelease": [
+        "10.04",
+        "12.04",
+        "14.04"
+      ]
+    }
+  ],
+  "dependencies": [
+
+  ]
+}

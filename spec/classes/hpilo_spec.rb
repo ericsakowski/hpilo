@@ -29,10 +29,10 @@ describe 'hpilo' do
       }.merge default_params
     end
 
-    it { should contain_class('hpilo') }
-    it { should contain_package('hponcfg').with_ensure('present') }
-    it { should contain_exec("/sbin/hponcfg -f /ilosettings.xml -l /tmp/ilosettings.log") }
-    it { should contain_file("/ilosettings.xml").
+    it { is_expected.to contain_class('hpilo') }
+    it { is_expected.to contain_package('hponcfg').with_ensure('present') }
+    it { is_expected.to contain_exec("/sbin/hponcfg -f /ilosettings.xml -l /tmp/ilosettings.log") }
+    it { is_expected.to contain_file("/ilosettings.xml").
       with_content(/<GATEWAY_IP_ADDRESS VALUE = \"1.1.1.1\"\/>/).
       with_content(/<IP_ADDRESS VALUE = \"2.2.2.2\"\/>/) }
    
@@ -45,10 +45,10 @@ describe 'hpilo' do
       }.merge default_params
     end
     #it { p subject.resources }
-    it { should contain_class('hpilo') }
-    it { should contain_package('hponcfg').with_ensure('present') }
-    it { should contain_exec("/sbin/hponcfg -f /ilosettings.xml -l /tmp/ilosettings.log") }
-    it { should contain_file("/ilosettings.xml").with_content(/<DHCP_ENABLE value=\"Yes\"\/>/)  }
+    it { is_expected.to contain_class('hpilo') }
+    it { is_expected.to contain_package('hponcfg').with_ensure('present') }
+    it { is_expected.to contain_exec("/sbin/hponcfg -f /ilosettings.xml -l /tmp/ilosettings.log") }
+    it { is_expected.to contain_file("/ilosettings.xml").with_content(/<DHCP_ENABLE value=\"Yes\"\/>/)  }
   end
 
   describe 'test hpilo when autoip == true' do 
@@ -59,7 +59,7 @@ describe 'hpilo' do
       }.merge default_params
     end
     ##it { p subject.resources }
-    it { should contain_file('/ilosettings.xml').with_content(/IP_ADDRESS VALUE = \"3.3.28.3\"\/>/) }
+    it { is_expected.to contain_file('/ilosettings.xml').with_content(/IP_ADDRESS VALUE = \"3.3.28.3\"\/>/) }
   end
 
   describe 'test hpilo when shared == true' do
@@ -69,7 +69,7 @@ describe 'hpilo' do
       }.merge default_params
     end
     ##it { p subject.resources }
-    it { should contain_file('/ilosettings.xml').with_content(/<SHARED_NETWORK_PORT VALUE=\"Y\"\/>/) }
+    it { is_expected.to contain_file('/ilosettings.xml').with_content(/<SHARED_NETWORK_PORT VALUE=\"Y\"\/>/) }
   end
 
   describe 'test hpilo when shared == false' do
@@ -79,6 +79,6 @@ describe 'hpilo' do
       }.merge default_params
     end
     ##it { p subject.resources }
-    it { should contain_file('/ilosettings.xml').with_content(/<SHARED_NETWORK_PORT VALUE=\"N\"\/>/) }
+    it { is_expected.to contain_file('/ilosettings.xml').with_content(/<SHARED_NETWORK_PORT VALUE=\"N\"\/>/) }
   end
 end

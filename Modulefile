@@ -1,8 +1,0 @@
-name    'hpilo'
-version '0.0.2'
-source 'UNKNOWN'
-author 'Corey Osman - Logicminds Corp'
-license 'GPL'
-summary 'Module for configuring the hp ilo interface using hponfig and xml config file'
-description 'This module will configure all hp ilo interfaces when the hponfig binary from hp is installed.'
-project_page 'http://www.github.com/logicminds/hpilo.git'

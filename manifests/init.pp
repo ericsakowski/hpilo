@@ -62,6 +62,8 @@ class hpilo(
       /G4/: { $ilogen = 1 }
       /G3/: { $ilogen = 0 }
       /G7/: { $ilogen = 3 }
+      /G8/: { $ilogen = 4 }
+      /G9/: { $ilogen = 4 }
       default: { $ilogen = 1 }
                 
     }

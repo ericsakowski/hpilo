@@ -22,7 +22,7 @@ Integrated Lights-Out, or iLO, is an embedded server management technology exclu
 Hewlett-Packard but similar in functionality to the Lights out management (LOM) technology 
 of other vendors, for example Sun/Oracle's ILOM, Dell DRAC and the IBM Remote Supervisor Adapter.
 
-Tested with PE 2.8.1 and should work w/ Puppet 3.
+Tested with Puppet 3.2+.
 
 ##Module Description
 
@@ -104,8 +104,6 @@ To configure with yaml in hiera for Puppet 3:
 If you modify network settings but not the user after the initial run, hponcfg 
 will return an error exit code for trying to create a user that already exists,
 but will still apply the new network settings.
-
-Only tested on Centos 6.4 with Puppet Enterprise 2.8.1.  Should probably work on RHEL and SuSE.
 
 ##Similar Modules
 If you like this module, I have built a similar module that is generic and manages the IMPI device and IPMI user and doesn't depend on hp tools.
