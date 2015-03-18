@@ -50,7 +50,7 @@ class hpilo(
   ){
 
   if ($autoip) {
-    notify { "autoip is true.  gateway and ip values will be automatically set.": }
+    notify { 'autoip is true.  gateway and ip values will be automatically set.': }
   }
   
   # Don't run these if not an HP machine
@@ -68,24 +68,24 @@ class hpilo(
                 
     }
     exec{"/sbin/hponcfg -f ${settingsfile} -l ${logfile}":
-      onlyif => "test -e /sbin/hponcfg",
-      path =>"/bin:/usr/sbin:/usr/bin",
+      onlyif      => 'test -e /sbin/hponcfg',
+      path        =>'/bin:/usr/sbin:/usr/bin',
       refreshonly => true,
-      subscribe => File["${settingsfile}"],
-      timeout => 0,	
+      subscribe   => File[$settingsfile],
+      timeout     => 0,
     }
     
-    package { "hponcfg":
+    package { 'hponcfg':
       ensure => 'present',
     }
     # since the template accomodates dhcp and static there is no need to change the template file
-    $ilotemplate = "hpilo/iloconfig.erb"
-    file { "${settingsfile}":
-      content => template("${ilotemplate}"),
-      ensure => present,
-      owner => root,
-      group => root,
-      mode => 644
+    $ilotemplate = 'hpilo/iloconfig.erb'
+    file { $settingsfile:
+      content => template($ilotemplate),
+      ensure  => present,
+      owner   => root,
+      group   => root,
+      mode    => '0644'
     }
   }
 }
