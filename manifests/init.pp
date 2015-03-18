@@ -54,9 +54,9 @@ class hpilo(
   }
   
   # Don't run these if not an HP machine
-  if ( $manufacturer ) and ( $manufacturer == 'HP') {
+  if ( $::manufacturer ) and ( $::manufacturer == 'HP') {
     # Not all ilos have the same feature set and thus ilo configs are not backwards compatible
-    case $productname {
+    case $::productname {
       /G5/: { $ilogen = 2 }
       /G6/: { $ilogen = 2 }
       /G4/: { $ilogen = 1 }
