@@ -109,6 +109,24 @@ but will still apply the new network settings.
 If you like this module, I have built a similar module that is generic and manages the IMPI device and IPMI user and doesn't depend on hp tools.
 [BMClib](https://github.com/logicminds/bmclib)
 
+## Development
+This module uses puppet-blacksmith to help with release management.
+
+Ensure you run bundle install
+
+` bundle install`
+
+### View all rake tasks
+`bundle exec rake -T`
+
+### Test
+`bundle exec rake spec`
+
+### To Release
+
+```shell
+   bundle exec rake module:release    # Release the Puppet module, doing a clean, build, tag, push, bump_commit and git push
+```
 ##Contributors
  * Original module by Corey Osman <corey@logicminds.biz>
  * Major refactor by Eric Sakowski <sakowski@gmail.com>
