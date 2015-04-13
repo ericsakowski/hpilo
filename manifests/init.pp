@@ -75,8 +75,10 @@ class hpilo(
       timeout     => 0,
     }
     
-    package { 'hponcfg':
-      ensure => 'present',
+    if ! defined(Package['hponcfg']) {
+      package { 'hponcfg':
+        ensure => 'present',
+      }
     }
     # since the template accomodates dhcp and static there is no need to change the template file
     $ilotemplate = 'hpilo/iloconfig.erb'
