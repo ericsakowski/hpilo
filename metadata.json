@@ -6,7 +6,7 @@
   "project_page": "http://www.github.com/logicminds/hpilo",
   "source": "https://github.com/logicminds/hpilo.git",
   "summary": "The hpilo is a module that automates configuration of hpilo devices",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "issues_url": "https://github.com/logicminds/hpilo/issues",
   "operatingsystem_support": [
     {
