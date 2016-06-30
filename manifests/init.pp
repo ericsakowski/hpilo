@@ -57,15 +57,14 @@ class hpilo(
   if ( $::manufacturer ) and ( $::manufacturer == 'HP') {
     # Not all ilos have the same feature set and thus ilo configs are not backwards compatible
     case $::productname {
+      /G3/: { $ilogen = 0 }
+      /G4/: { $ilogen = 1 }
       /G5/: { $ilogen = 2 }
       /G6/: { $ilogen = 2 }
-      /G4/: { $ilogen = 1 }
-      /G3/: { $ilogen = 0 }
       /G7/: { $ilogen = 3 }
       /Gen8/: { $ilogen = 4 }
       /Gen9/: { $ilogen = 4 }
       default: { $ilogen = 1 }
-                
     }
     exec{"/sbin/hponcfg -f ${settingsfile} -l ${logfile}":
       onlyif      => 'test -e /sbin/hponcfg',
