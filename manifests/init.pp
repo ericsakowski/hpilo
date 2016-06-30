@@ -81,7 +81,6 @@ class hpilo (
       /Gen9/: { $ilogen = 4 }
       default: { $ilogen = 1 }
     }
-    exec{"/sbin/hponcfg -f ${settingsfile} -l ${logfile}":
 
     if $manage_package {
       package { 'hponcfg':
@@ -90,12 +89,14 @@ class hpilo (
       }
     }
 
-      onlyif      => 'test -e /sbin/hponcfg',
-      path        =>'/bin:/usr/sbin:/usr/bin',
+    exec{"hponcfg -f ${settingsfile} -l ${logfile}":
+      onlyif      => 'which hponcfg',
+      path        =>'/bin:/usr/sbin:/usr/bin:/sbin/',
       refreshonly => true,
       subscribe   => File[$settingsfile],
       timeout     => 0,
     }
+
     # since the template accomodates dhcp and static there is no need to change the template file
     $ilotemplate = 'hpilo/iloconfig.erb'
     file { $settingsfile:
