@@ -1,52 +1,52 @@
-<% if autoip == true -%>
-   <% iparray = ipaddress.split('.') -%>
-   <% iloip = iparray[0] + '.' + iparray[1] + '.' + ilonet + '.' + iparray[3] -%>
-   <% gwarray = iloip.split('.') -%>
-   <% gateway = gwarray[0] + '.' + gwarray[1] + '.' + gwarray[2] + '.' + gwbit -%>
+<% if scope['autoip'] == true -%>
+   <% iparray = scope['::ipaddress'].split('.') -%>
+   <% @iloip = iparray[0] + '.' + iparray[1] + '.' + scope['ilonet'] + '.' + iparray[3] -%>
+   <% gwarray = @iloip.split('.') -%>
+   <% gateway = gwarray[0] + '.' + gwarray[1] + '.' + gwarray[2] + '.' + scope['gwbit'] -%>
 <% else -%>
-   <% iloip = ip -%>
-<% end -%> 
+   <% @iloip = scope['ip'] -%>
+<% end -%>
 
 <RIBCL VERSION="2.0">
   <LOGIN USER_LOGIN="adminname" PASSWORD="password">
-  <% if ilogen.to_i > 1 -%>
+  <% if scope['::ilogen'].to_i > 1 -%>
   <SERVER_INFO MODE="write">
-       <SERVER_NAME value ="<%= hostname %>" />
+       <SERVER_NAME value ="<%= scope['::hostname'] %>" />
   </SERVER_INFO>
-  <% end -%> 
+  <% end -%>
   <RIB_INFO MODE="write">
-<% if dhcp == false -%>
+<% if scope['dhcp'] == false -%>
     <MOD_NETWORK_SETTINGS>
       <SPEED_AUTOSELECT VALUE = "Y"/>
-<% if !shared -%>
+<% if scope['shared'] == false -%>
       <SHARED_NETWORK_PORT VALUE="N"/>
 <% end -%>
-<% if shared -%>
+<% if scope['shared'] == true -%>
       <SHARED_NETWORK_PORT VALUE="Y"/>
 <% end -%>
-      <IP_ADDRESS VALUE = "<%= iloip -%>"/>
-      <SUBNET_MASK VALUE = "<%= netmask -%>"/>
-      <GATEWAY_IP_ADDRESS VALUE = "<%= gw -%>"/>
-      <DNS_NAME VALUE = "<%= hostname -%>-iLO"/>
-      <PRIM_DNS_SERVER value = "<%= dns -%>"/>
+      <IP_ADDRESS VALUE = "<%= @iloip -%>"/>
+      <SUBNET_MASK VALUE = "<%= scope['netmask'] -%>"/>
+      <GATEWAY_IP_ADDRESS VALUE = "<%= scope['gw'] -%>"/>
+      <DNS_NAME VALUE = "<%= scope['::hostname'] -%>-iLO"/>
+      <PRIM_DNS_SERVER value = "<%= scope['dns'] -%>"/>
       <DHCP_ENABLE VALUE = "N"/>
       <DOMAIN_NAME VALUE = ""/>
     </MOD_NETWORK_SETTINGS>
 <% end -%>
-<% if dhcp == true -%>
+<% if scope['dhcp'] == true -%>
     <MOD_NETWORK_SETTINGS>
       <REG_DDNS_SERVER value="Yes"/>
       <DHCP_DOMAIN_NAME value="Yes"/>
       <DHCP_ENABLE value="Yes"/>
-      <DNS_NAME value="ilo-<%= hostname %>"/>
+      <DNS_NAME value="ilo-<%= scope['::hostname'] %>"/>
       <DHCP_GATEWAY value="Yes"/>
       <DHCP_DNS_SERVER value="Yes"/>
       <DHCP_WINS_SERVER value="Yes"/>
       <DHCP_STATIC_ROUTE value="Yes"/>
-<% if shared == false -%>
+<% if scope['shared'] == false -%>
       <SHARED_NETWORK_PORT VALUE="N"/>
 <% end -%>
-<% if shared == true -%>
+<% if scope['shared'] == true -%>
       <SHARED_NETWORK_PORT VALUE="Y"/>
 <% end -%>
     </MOD_NETWORK_SETTINGS>
@@ -55,8 +55,8 @@
   <USER_INFO MODE="write">
     <ADD_USER
       USER_NAME="User"
-      USER_LOGIN="<%= ilouser %>"
-      PASSWORD="<%= ilouserpass %>" >
+      USER_LOGIN="<%= scope['ilouser'] %>"
+      PASSWORD="<%= scope['ilouserpass'] %>" >
       <ADMIN_PRIV value ="Y"/>
       <REMOTE_CONS_PRIV value ="Y"/>
       <RESET_SERVER_PRIV value ="Y"/>
