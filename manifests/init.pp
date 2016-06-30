@@ -67,17 +67,19 @@ class hpilo(
       default: { $ilogen = 1 }
     }
     exec{"/sbin/hponcfg -f ${settingsfile} -l ${logfile}":
+
+    if $manage_package {
+      package { 'hponcfg':
+        ensure => 'present',
+        before => Exec["hponcfg -f ${settingsfile} -l ${logfile}"],
+      }
+    }
+
       onlyif      => 'test -e /sbin/hponcfg',
       path        =>'/bin:/usr/sbin:/usr/bin',
       refreshonly => true,
       subscribe   => File[$settingsfile],
       timeout     => 0,
-    }
-    
-    if ! defined(Package['hponcfg']) {
-      package { 'hponcfg':
-        ensure => 'present',
-      }
     }
     # since the template accomodates dhcp and static there is no need to change the template file
     $ilotemplate = 'hpilo/iloconfig.erb'
