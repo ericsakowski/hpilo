@@ -29,6 +29,8 @@
 #
 # @param ip [String]
 #
+# @param custom_template [String] Allows you to set a custom file template
+#
 # @param autoip [Boolean] This will examine the IP of the system and substitute the value of param
 #   ilonet for the third octet, fx on a system where facter ipaddress is 192.168.1.10 and
 #   a param ilonet = '27', ip of the ilo will be 192.168.27.10
@@ -51,7 +53,6 @@ class hpilo (
   $dns = '192.168.1.1',
   $gw = '192.168.1.254',
   $gwbit = '240',
-  $ilo_template = template('hpilo/iloconfig.erb'),
   $ilonet = '27',
   $ilouser = 'admin',
   $ilouserpass = 'password',
@@ -97,14 +98,18 @@ class hpilo (
       timeout     => 0,
     }
 
-    # since the template accomodates dhcp and static there is no need to change the template file
-    $ilotemplate = 'hpilo/iloconfig.erb'
     file { $settingsfile:
-      content => template($ilotemplate),
-      ensure  => present,
-      owner   => root,
-      group   => root,
-      mode    => '0644'
+      ensure  => file,
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0644',
+    }
+
+    # since the template accomodates dhcp and static there is no need to change the template file
+    if $custom_template {
+      File[$settingsfile] { content => $custom_template }
+    } else {
+      File[$settingsfile] { content => template('hpilo/iloconfig.erb') }
     }
   }
 }

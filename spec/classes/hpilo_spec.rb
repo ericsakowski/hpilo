@@ -81,4 +81,14 @@ describe 'hpilo' do
     ##it { p subject.resources }
     it { is_expected.to contain_file('/ilosettings.xml').with_content(/<SHARED_NETWORK_PORT VALUE=\"N\"\/>/) }
   end
+
+  describe 'test hpilo when custom_template is provided' do
+    let(:params) do
+      {
+        :custom_template => 'Cool Template String'
+      }.merge default_params
+    end
+    ##it { p subject.resources }
+    it { is_expected.to contain_file('/ilosettings.xml').with_content(/^Cool Template String$/) }
+  end
 end
