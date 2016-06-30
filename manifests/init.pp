@@ -1,58 +1,73 @@
-# Class: hpilo
+# hpilo - Used for managing HPILO
+# (http://www8.hp.com/uk/en/products/servers/ilo/)
 #
-# This module manages hpilo
+# @example
+#   include hpilo
 #
-# Parameters:
-#  dhcp
-#  shared
-#  dns
-#  netmask 
-#  ilouser
-#  ilouserpass
-#  gw
-#  ip
-#  autoip
-#  ilonet
-#  gwbit
-#  logfile
-#  settingsfile
-#  
-#  
-# Actions:
+# @example
+#   class { 'hpilo':
+#      dhcp        => true,
+#      ilouser     => 'admin',
+#      ilouserpass => 'password'
+#    }
 #
-# Requires:
+# @author Eric Sakowski
 #
-# Sample Usage:
+# @param shared [Boolean] Whether or not to enable the shared network port
 #
-# [Remember: No empty lines between comments and class definition]
-class hpilo(
-  $shared = true,             # Whether or not to enable the shared network port
-  $dhcp = false,              # You will need to define these parameters for the static templates to work correctly
-  $dns = '192.168.1.1',       # this is your dns server
-  $netmask = '255.255.255.0', # this is your netmask
-  $ilouser = 'admin',         # this is the default admin username you wish to create
-  $ilouserpass = 'password',  # this is the default password for the default admin user
-
-  ##if autoip is set to true, gw and ip will be disregarded
-  $gw = '192.168.1.254',  # You will need to set this if autoip is false
-  $ip = '192.168.1.2',    # You will need to set this if autoip is false
-
-  ## This will examine the IP of the system and substitute the value of param ilonet for the third octet, fx on a system where
-  ## facter ipaddress is 192.168.1.10 and a param ilonet = '27', ip of the ilo will be 192.168.27.10
-  $autoip = false,            # set to true if you want to use the auto ip setting which will set ip and gateway automatically
-                              # based on the current ip address of the system.  
-  #Set only if autoip is true
-  $ilonet = '27',     # if you want to put your ilo card on a separate network  example: 192.168.xxx.22; disregarded if autoip is false
-  $gwbit = '240',     # this is the gateway bit if using a 24 bit netmask: example: 192.168.25.xxx, disregarded if autoip is false
-
-  $logfile='/tmp/ilosettings.log',
-  $settingsfile='/etc/ilosettings.xml',
-  ){
+# @param dhcp [String] You will need to define these parameters for the static templates to work correctly
+#
+# @param dns [String] this is your dns server
+#
+# @param netmask [String] this is your netmask
+#
+# @param ilouser [String] this is the default admin username you wish to create
+#
+# @param ilouserpass [String] this is the default password for the default admin user
+#
+# @param gw [String]
+#
+# @param ip [String]
+#
+# @param autoip [Boolean] This will examine the IP of the system and substitute the value of param
+#   ilonet for the third octet, fx on a system where facter ipaddress is 192.168.1.10 and
+#   a param ilonet = '27', ip of the ilo will be 192.168.27.10
+#   if autoip is set to true, gw and ip will be disregarded
+#
+# @param ilonet [String] If you want to put your ilo card on a separate network
+#   example: 192.168.xxx.22; disregarded if autoip is false
+#
+# @param gwbit [String]
+#   this is the gateway bit if using a 24 bit netmask: example: 192.168.25.xxx, disregarded if autoip is false
+#
+# @param logfile [String] Location to log results from hponcfg command
+#
+# @param settingsfile [String] Location to store HPILO config file
+#
+class hpilo (
+  $autoip = false,
+  $custom_template = undef,
+  $dhcp = false,
+  $dns = '192.168.1.1',
+  $gw = '192.168.1.254',
+  $gwbit = '240',
+  $ilo_template = template('hpilo/iloconfig.erb'),
+  $ilonet = '27',
+  $ilouser = 'admin',
+  $ilouserpass = 'password',
+  $ip = '192.168.1.2',
+  $logfile = '/tmp/ilosettings.log',
+  $manage_package = true,
+  $netmask = '255.255.255.0',
+  $settingsfile = '/etc/ilosettings.xml',
+  $shared = true,
+)
+{
 
   if ($autoip) {
     notify { 'autoip is true.  gateway and ip values will be automatically set.': }
   }
-  
+
   # Don't run these if not an HP machine
   if ( $::manufacturer ) and ( $::manufacturer == 'HP') {
     # Not all ilos have the same feature set and thus ilo configs are not backwards compatible
