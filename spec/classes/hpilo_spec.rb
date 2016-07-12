@@ -31,15 +31,15 @@ describe 'hpilo' do
 
     it { is_expected.to contain_class('hpilo') }
     it { is_expected.to contain_package('hponcfg').with_ensure('present') }
-    it { is_expected.to contain_exec("/sbin/hponcfg -f /ilosettings.xml -l /tmp/ilosettings.log") }
+    it { is_expected.to contain_exec("hponcfg -f /ilosettings.xml -l /tmp/ilosettings.log") }
     it { is_expected.to contain_file("/ilosettings.xml").
       with_content(/<GATEWAY_IP_ADDRESS VALUE = \"1.1.1.1\"\/>/).
       with_content(/<IP_ADDRESS VALUE = \"2.2.2.2\"\/>/) }
-   
+
   end
 
   describe 'test hpilo when dhcp == true' do
-    let(:params) do 
+    let(:params) do
       {
         :dhcp => true
       }.merge default_params
@@ -47,12 +47,12 @@ describe 'hpilo' do
     #it { p subject.resources }
     it { is_expected.to contain_class('hpilo') }
     it { is_expected.to contain_package('hponcfg').with_ensure('present') }
-    it { is_expected.to contain_exec("/sbin/hponcfg -f /ilosettings.xml -l /tmp/ilosettings.log") }
+    it { is_expected.to contain_exec("hponcfg -f /ilosettings.xml -l /tmp/ilosettings.log") }
     it { is_expected.to contain_file("/ilosettings.xml").with_content(/<DHCP_ENABLE value=\"Yes\"\/>/)  }
   end
 
-  describe 'test hpilo when autoip == true' do 
-    let(:params) do 
+  describe 'test hpilo when autoip == true' do
+    let(:params) do
       {
         :autoip => true,
         :ilonet => '28',
@@ -80,5 +80,15 @@ describe 'hpilo' do
     end
     ##it { p subject.resources }
     it { is_expected.to contain_file('/ilosettings.xml').with_content(/<SHARED_NETWORK_PORT VALUE=\"N\"\/>/) }
+  end
+
+  describe 'test hpilo when custom_template is provided' do
+    let(:params) do
+      {
+        :custom_template => 'Cool Template String'
+      }.merge default_params
+    end
+    ##it { p subject.resources }
+    it { is_expected.to contain_file('/ilosettings.xml').with_content(/^Cool Template String$/) }
   end
 end
