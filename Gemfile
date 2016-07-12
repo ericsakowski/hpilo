@@ -13,8 +13,8 @@ group :development do
   gem "travis"
   gem "travis-lint"
   gem "puppet-blacksmith"
-  gem "guard-rake"
   gem 'puppet-syntax'
+  gem 'listen', '<= 3.0.6'
   #gem 'serverspec'
 end
 
